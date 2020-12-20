@@ -26,7 +26,7 @@
       <aside class="col-3" id="left-side">
         <h6>Search for a City:</h6>
         <input id="search-input" />
-        <button id="search-button"></button>
+        <button class="btn btn-primary" id="search-button">Search</button>
         <div id="city-list"></div>
       </aside>
 
@@ -74,7 +74,7 @@
           var newEl = $("<h2>");
 
           // 2. Create content
-          newEl.text("Atlanta (8/15/2019)");
+          newEl.text(response.name + " (" + response.timezone + ")");
 
           // 3. Append to existing to a parent element
           citySelected.append(newEl);
