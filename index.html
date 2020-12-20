@@ -53,6 +53,7 @@
       $(document).ready(function () {
         console.log("Im ready!!");
 
+        var citySelected = $("#day-weather");
         var city = "";
         var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
 
@@ -70,7 +71,7 @@
           }).then(function (response) {
             console.log(response);
 
-            var citySelected = $("#day-weather");
+            citySelected.empty();
 
             // Adding statistics to the city selected
             // 1. Create an Element
