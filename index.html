@@ -53,12 +53,17 @@
       $(document).ready(function () {
         console.log("Im ready!!");
 
+        var citySelected = $("#day-weather");
+
+        // Adding statistics to the city selected
         // 1. Create an Element
+        var newEl = $("<h2>");
 
         // 2. Create content
+        newEl.text("Atlanta (8/15/2019)");
 
         // 3. Append to existing to a parent element
-
+        citySelected.append(newEl);
       });
     </script>
   </body>
