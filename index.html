@@ -108,6 +108,19 @@
 
             // 3. Append to existing to a parent element
             citySelected.append(newTemp);
+
+            // Add a break on the page
+            citySelected.append($("<br>"));
+
+            // 1. Create an Element
+            var newWS = $("<div>");
+
+            // 2. Create content
+            newWS.text("Wind Speed: " + response.wind.speed + "MPH");
+            newWS.attr("style", "float: left;");
+
+            // 3. Append to existing to a parent element
+            citySelected.append(newWS);
           });
         }
 
