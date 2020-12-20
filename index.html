@@ -55,15 +55,14 @@
 
         var city = "";
         var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
-        
-        function renderNow() {
 
+        function renderNow() {
           // queryURL gets updated with enetered city name
           var queryURL =
-          "http://api.openweathermap.org/data/2.5/weather?q=" +
-          city +
-          "&units=imperial&appid=" +
-          apiKey;
+            "http://api.openweathermap.org/data/2.5/weather?q=" +
+            city +
+            "&units=imperial&appid=" +
+            apiKey;
 
           $.ajax({
             url: queryURL,
@@ -91,11 +90,24 @@
 
             // 2. Create content
             newTemp.text("Temperature: " + response.main.temp);
-            newTemp.attr("style", "float: left;")
+            newTemp.attr("style", "float: left;");
 
             // 3. Append to existing to a parent element
             citySelected.append(newTemp);
-            citySelected.append('&#8457;')
+            citySelected.append("&#8457;");
+
+            // Add a break on the page
+            citySelected.append($("<br>"));
+
+            // 1. Create an Element
+            var newTemp = $("<div>");
+
+            // 2. Create content
+            newTemp.text("Humidity: " + response.main.humidity + "%");
+            newTemp.attr("style", "float: left;");
+
+            // 3. Append to existing to a parent element
+            citySelected.append(newTemp);
           });
         }
 
