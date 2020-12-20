@@ -53,17 +53,44 @@
       $(document).ready(function () {
         console.log("Im ready!!");
 
-        var citySelected = $("#day-weather");
+        var city = "Atlanta";
+        var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
+        var queryURL =
+          "http://api.openweathermap.org/data/2.5/weather?q=" +
+          city +
+          "&appid=" +
+          apiKey;
 
-        // Adding statistics to the city selected
-        // 1. Create an Element
-        var newEl = $("<h2>");
+        $.ajax({
+          url: queryURL,
+          method: "GET",
+        }).then(function (response) {
+          console.log(response);
 
-        // 2. Create content
-        newEl.text("Atlanta (8/15/2019)");
+          var citySelected = $("#day-weather");
 
-        // 3. Append to existing to a parent element
-        citySelected.append(newEl);
+          // Adding statistics to the city selected
+          // 1. Create an Element
+          var newEl = $("<h2>");
+
+          // 2. Create content
+          newEl.text("Atlanta (8/15/2019)");
+
+          // 3. Append to existing to a parent element
+          citySelected.append(newEl);
+
+          // Add a break on the page
+          citySelected.append($("<br>"));
+
+          // 1. Create an Element
+          var newTemp = $("<p>");
+
+          // 2. Create content
+          newTemp.text("Temperature: ");
+
+          // 3. Append to existing to a parent element
+          citySelected.append(newTemp);
+        });
       });
     </script>
   </body>
