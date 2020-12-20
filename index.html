@@ -87,13 +87,15 @@
             citySelected.append($("<br>"));
 
             // 1. Create an Element
-            var newTemp = $("<p>");
+            var newTemp = $("<div>");
 
             // 2. Create content
             newTemp.text("Temperature: " + response.main.temp);
+            newTemp.attr("style", "float: left;")
 
             // 3. Append to existing to a parent element
             citySelected.append(newTemp);
+            citySelected.append('&#8457;')
           });
         }
 
