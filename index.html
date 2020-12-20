@@ -53,43 +53,55 @@
       $(document).ready(function () {
         console.log("Im ready!!");
 
-        var city = "Atlanta";
+        var city = "";
         var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
-        var queryURL =
+        
+        function renderNow() {
+
+          // queryURL gets updated with enetered city name
+          var queryURL =
           "http://api.openweathermap.org/data/2.5/weather?q=" +
           city +
           "&appid=" +
           apiKey;
 
-        $.ajax({
-          url: queryURL,
-          method: "GET",
-        }).then(function (response) {
-          console.log(response);
+          $.ajax({
+            url: queryURL,
+            method: "GET",
+          }).then(function (response) {
+            console.log(response);
 
-          var citySelected = $("#day-weather");
+            var citySelected = $("#day-weather");
 
-          // Adding statistics to the city selected
-          // 1. Create an Element
-          var newEl = $("<h2>");
+            // Adding statistics to the city selected
+            // 1. Create an Element
+            var newEl = $("<h2>");
 
-          // 2. Create content
-          newEl.text(response.name + " (" + response.timezone + ")");
+            // 2. Create content
+            newEl.text(response.name + " (" + response.timezone + ")");
 
-          // 3. Append to existing to a parent element
-          citySelected.append(newEl);
+            // 3. Append to existing to a parent element
+            citySelected.append(newEl);
 
-          // Add a break on the page
-          citySelected.append($("<br>"));
+            // Add a break on the page
+            citySelected.append($("<br>"));
 
-          // 1. Create an Element
-          var newTemp = $("<p>");
+            // 1. Create an Element
+            var newTemp = $("<p>");
 
-          // 2. Create content
-          newTemp.text("Temperature: ");
+            // 2. Create content
+            newTemp.text("Temperature: ");
 
-          // 3. Append to existing to a parent element
-          citySelected.append(newTemp);
+            // 3. Append to existing to a parent element
+            citySelected.append(newTemp);
+          });
+        }
+
+        $("#search-button").on("click", function () {
+          var inputSearch = $("#search-input").val();
+          city = inputSearch;
+          console.log("you clicked the button!: " + city);
+          renderNow();
         });
       });
     </script>
