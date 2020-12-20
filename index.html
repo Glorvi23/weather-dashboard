@@ -62,7 +62,7 @@
           var queryURL =
           "http://api.openweathermap.org/data/2.5/weather?q=" +
           city +
-          "&appid=" +
+          "&units=imperial&appid=" +
           apiKey;
 
           $.ajax({
@@ -90,7 +90,7 @@
             var newTemp = $("<p>");
 
             // 2. Create content
-            newTemp.text("Temperature: ");
+            newTemp.text("Temperature: " + response.main.temp);
 
             // 3. Append to existing to a parent element
             citySelected.append(newTemp);
