@@ -14,13 +14,21 @@
   </head>
   <body>
     <!-- div navbar? for top bar "Weather Dashboard" (h1) -->
-
+    <nav style="text-align: center; background-color: rgb(49, 58, 58)">
+      <h1 style="color: white">Weather Dashboard</h1>
+    </nav>
 
     <!-- aside tag for left side bar card class? col-3
     form to search for a city: (h4, h5?) with search button 
     local storage to show searched places (p) (getitem())
     -->
-
+    <div class="row">
+      <aside class="col-3" id="left-side">
+        <h6>Search for a City:</h6>
+        <input id="search-input" />
+        <button id="search-button"></button>
+        <div id="city-list"></div>
+      </aside>
 
       <!-- container for right side of page (main tag)
     row, col-9
@@ -29,7 +37,17 @@
     row, col -> 5 day forecast (h3, h4?) brk,
     row, col-5 -> date brk, weather icon, brk, temp: ##.## F, brk,
     humidity: ##% -->
-      
+      <div class="col-9">
+        <div class="row">
+          <div class="col" id="day-weather"></div>
+        </div>
+        <div class="row">
+          <div class="col" id="five-day-forcast">
+            <h4>5-Day Forcast:</h4>
+          </div>
+        </div>
+      </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>      $(document).ready(function(){
       console.log("Im ready!!");
