@@ -12,6 +12,7 @@
     />
     <link rel="stylesheet" href="" />
   </head>
+
   <body>
     <!-- div navbar? for top bar "Weather Dashboard" (h1) -->
     <nav style="text-align: center; background-color: rgb(49, 58, 58)">
@@ -42,7 +43,7 @@
           <div class="col" id="day-weather"></div>
         </div>
         <div class="row">
-          <div class="col">
+          <div class="col" id="forecast-title">
             <h4>5-Day Forcast:</h4>
             <div class="row" id="five-day-forecast"></div>
           </div>
@@ -56,6 +57,7 @@
         console.log("Im ready!!");
 
         var citySelected = $("#day-weather");
+        // var forecastTitle = $("#forecast-title");
         var forecast = $("#five-day-forecast");
         var storedCities = $("#city-list");
         var city = "";
@@ -93,7 +95,7 @@
             var icon = response.weather[0].icon;
 
             var date = new Date(response.dt * 1000);
-            var dateString = date.toString();
+            var dateString = date.toLocaleDateString();
             console.log(dateString);
 
             // 2. Create content
@@ -169,9 +171,13 @@
             url: secondQueryURL,
             method: "GET",
           }).then(function (response) {
-            console.log(response);
-
+            
             forecast.empty();
+
+            // var newTitle = $("<h4>");
+            // newTitle.text("5-Day Forcast:");
+            // console.log(newTitle.text());
+            // forecastTitle.append(newTitle);
 
             var newEl = $("<p>");
             newEl.text("UV index: " + response.current.uvi);
@@ -190,7 +196,7 @@
               var icon = response.daily[i].weather[0].icon;
 
               var date = new Date(response.daily[i].dt * 1000);
-              var dateString = date.toString();
+              var dateString = date.toLocaleDateString();
               console.log(dateString);
 
               newEl.attr("style", "display: flex");

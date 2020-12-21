@@ -17,7 +17,7 @@ You need to first install vscode, create a github account, and download git bash
 
 ## Usage
 
-![Work-Day-Scheduler](assets/images/.png)
+![Weather-Dashboard](assets/images/.png)
 
 
 ## Credits
