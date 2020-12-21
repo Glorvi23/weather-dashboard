@@ -27,7 +27,7 @@
         <h6>Search for a City:</h6>
         <input id="search-input" />
         <button class="btn btn-primary" id="search-button">Search</button>
-        <div id="city-list"></div>
+        <div class="container" id="city-list"></div>
       </aside>
 
       <!-- container for right side of page (main tag)
@@ -57,10 +57,12 @@
 
         var citySelected = $("#day-weather");
         var forecast = $("#five-day-forecast");
+        var storedCities = $("#city-list");
         var city = "";
         var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
         var lat = "";
         var lon = "";
+        var count = 0;
 
         function renderNow() {
           var queryURL =
@@ -87,6 +89,11 @@
             // Adding statistics to the city selected
             // 1. Create an Element
             var newEl = $("<h2>");
+
+            // var d = response.dt;
+            // var n = d.toString();
+            // console.log(n);
+            // document.getElementById("demo").innerHTML = n;
 
             // 2. Create content
             newEl.text(response.name + " (" + response.dt + ")");
@@ -198,11 +205,31 @@
           });
         }
 
+        function renderStorage() {
+          storedCities.empty();
+          for (var i = 0; i < count; i++) {
+            var currentCity = localStorage.getItem(i);
+
+            if (currentCity !== null) {
+              var newEl = $("<div>");
+              newEl.text(currentCity);
+              newEl.attr("data-list", i);
+              storedCities.prepend(newEl);
+            }
+          }
+        }
+
         // Or could of used $(this)
         $("#search-button").on("click", function () {
           var inputSearch = $("#search-input").val();
           city = inputSearch;
           console.log("you clicked the button!: " + city);
+
+          localStorage.setItem(count, city);
+          count++;
+          console.log("you clicked the button!: " + count);
+          // array???
+          renderStorage();
           renderNow();
         });
       });
