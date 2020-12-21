@@ -42,28 +42,34 @@
           <div class="col" id="day-weather"></div>
         </div>
         <div class="row">
-          <div class="col" id="five-day-forcast">
+          <div class="col">
             <h4>5-Day Forcast:</h4>
+            <div class="row" id="five-day-forecast"></div>
           </div>
         </div>
       </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
       $(document).ready(function () {
         console.log("Im ready!!");
 
         var citySelected = $("#day-weather");
+        var forecast = $("#five-day-forecast");
         var city = "";
         var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
+        var lat = "";
+        var lon = "";
 
         function renderNow() {
-          // queryURL gets updated with enetered city name
           var queryURL =
-            "https://api.openweathermap.org/data/2.5/weather?q=" +
+            "http://api.openweathermap.org/data/2.5/weather?q=" +
             city +
             "&units=imperial&appid=" +
             apiKey;
+
+          console.log(queryURL);
 
           $.ajax({
             url: queryURL,
@@ -73,15 +79,21 @@
 
             citySelected.empty();
 
+            lat = response.coord.lat;
+            console.log(lat);
+            lon = response.coord.lon;
+            console.log(lon);
+
             // Adding statistics to the city selected
             // 1. Create an Element
             var newEl = $("<h2>");
 
             // 2. Create content
-            newEl.text(response.name + " (" + response.timezone + ")");
+            newEl.text(response.name + " (" + response.dt + ")");
 
             // 3. Append to existing to a parent element
             citySelected.append(newEl);
+            citySelected.append(response.weather.icon);
 
             // Add a break on the page
             citySelected.append($("<br>"));
@@ -98,20 +110,20 @@
             citySelected.append("&#8457;");
 
             // Add a break on the page
-            citySelected.append($("<br>"));
+            citySelected.append($("<br><br>"));
 
             // 1. Create an Element
-            var newTemp = $("<div>");
+            var newHumid = $("<div>");
 
             // 2. Create content
-            newTemp.text("Humidity: " + response.main.humidity + "%");
-            newTemp.attr("style", "float: left;");
+            newHumid.text("Humidity: " + response.main.humidity + "%");
+            newHumid.attr("style", "float: left;");
 
             // 3. Append to existing to a parent element
-            citySelected.append(newTemp);
+            citySelected.append(newHumid);
 
             // Add a break on the page
-            citySelected.append($("<br>"));
+            citySelected.append($("<br><br>"));
 
             // 1. Create an Element
             var newWS = $("<div>");
@@ -122,9 +134,71 @@
 
             // 3. Append to existing to a parent element
             citySelected.append(newWS);
+
+            // Add a break on the page
+            citySelected.append($("<br><br>"));
+
+            renderForecast();
           });
         }
 
+        function renderForecast() {
+          var secondQueryURL =
+            "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+            lat +
+            "&lon=" +
+            lon +
+            "&units=imperial&exclude=hourly&appid=" +
+            apiKey;
+
+          console.log(secondQueryURL);
+
+          $.ajax({
+            url: secondQueryURL,
+            method: "GET",
+          }).then(function (response) {
+            console.log(response);
+
+            forecast.empty();
+
+            var newEl = $("<p>");
+            newEl.text("UV index: " + response.current.uvi);
+            citySelected.append(newEl);
+
+            // Add a break on the page
+            citySelected.append($("<br><br>"));
+
+            for (var i = 0; i < 5; i++) {
+              var newEl = $("<div>");
+              var secnewEl = $("<h6>");
+              var iconWeath = $("<div>");
+              var newP = $("<p>");
+              var newHum = $("<p>");
+
+              newEl.attr("style", "display: flex");
+              newEl.attr("style", "color: white");
+              newEl.addClass("col-2 mr-4 card bg-primary");
+
+              secnewEl.text(response.daily[i].dt);
+              iconWeath.text(response.daily[i].weather[0].icon);
+              newP.text("Temp: " + response.daily[i].temp.day);
+              newP.append("&#8457;");
+              newHum.text("Humidity: " + response.daily[i].humidity + "%");
+
+              newEl.append($("<br>"));
+              newEl.append(secnewEl);
+              newEl.append($("<br>"));
+              newEl.append(iconWeath);
+              newEl.append($("<br>"));
+              newEl.append(newP);
+              newEl.append(newHum);
+
+              forecast.append(newEl);
+            }
+          });
+        }
+
+        // Or could of used $(this)
         $("#search-button").on("click", function () {
           var inputSearch = $("#search-input").val();
           city = inputSearch;
