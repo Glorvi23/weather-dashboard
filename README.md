@@ -22,11 +22,9 @@ You need to first install vscode, create a github account, and download git bash
 
 ## Credits
 
-https://getbootstrap.com/
+The following people helped contribute to the project.
 
-https://github.com/Glorvi23/weather-dashboard
-
-https://glorvi23.github.io/weather-dashboard/
+[Jeana Rose](https://github.com/jeanarose)
 
 
 ## License
