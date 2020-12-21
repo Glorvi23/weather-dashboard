@@ -89,18 +89,23 @@
             // Adding statistics to the city selected
             // 1. Create an Element
             var newEl = $("<h2>");
+            var newIcon = $("<img>");
+            var icon = response.weather[0].icon;
 
-            // var d = response.dt;
-            // var n = d.toString();
-            // console.log(n);
-            // document.getElementById("demo").innerHTML = n;
+            var date = new Date(response.dt * 1000);
+            var dateString = date.toString();
+            console.log(dateString);
 
             // 2. Create content
-            newEl.text(response.name + " (" + response.dt + ")");
+            newEl.text(response.name + " (" + dateString + ")");
+            newIcon.attr(
+              "src",
+              "http://openweathermap.org/img/wn/" + icon + "@2x.png"
+            );
 
             // 3. Append to existing to a parent element
             citySelected.append(newEl);
-            citySelected.append(response.weather.icon);
+            citySelected.append(newIcon);
 
             // Add a break on the page
             citySelected.append($("<br>"));
@@ -178,16 +183,25 @@
             for (var i = 0; i < 5; i++) {
               var newEl = $("<div>");
               var secnewEl = $("<h6>");
-              var iconWeath = $("<div>");
+              var iconWeath = $("<img>");
               var newP = $("<p>");
               var newHum = $("<p>");
+              var newIcon = $("<img>");
+              var icon = response.daily[i].weather[0].icon;
+
+              var date = new Date(response.daily[i].dt * 1000);
+              var dateString = date.toString();
+              console.log(dateString);
 
               newEl.attr("style", "display: flex");
               newEl.attr("style", "color: white");
               newEl.addClass("col-2 mr-4 card bg-primary");
 
-              secnewEl.text(response.daily[i].dt);
-              iconWeath.text(response.daily[i].weather[0].icon);
+              secnewEl.text(dateString);
+              iconWeath.attr(
+                "src",
+                "http://openweathermap.org/img/wn/" + icon + "@2x.png"
+              );
               newP.text("Temp: " + response.daily[i].temp.day);
               newP.append("&#8457;");
               newHum.text("Humidity: " + response.daily[i].humidity + "%");
@@ -205,6 +219,7 @@
           });
         }
 
+        // Listing the entered cities in a list
         function renderStorage() {
           storedCities.empty();
           for (var i = 0; i < count; i++) {
@@ -219,7 +234,7 @@
           }
         }
 
-        // Or could of used $(this)
+        // Or could of used $(this)?
         $("#search-button").on("click", function () {
           var inputSearch = $("#search-input").val();
           city = inputSearch;
@@ -232,6 +247,12 @@
           renderStorage();
           renderNow();
         });
+
+        // $(this).on("click", "data-list", function(){
+        //   city = this.data;
+        //   console.log("You click here!!")
+        //   renderNow();
+        // });
       });
     </script>
   </body>
