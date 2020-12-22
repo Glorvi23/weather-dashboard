@@ -24,11 +24,13 @@
     local storage to show searched places (p) (getitem())
     -->
     <div class="row">
-      <aside class="col-3" id="left-side">
-        <h6>Search for a City:</h6>
-        <input id="search-input" />
-        <button class="btn btn-primary" id="search-button">Search</button>
-        <div class="container" id="city-list"></div>
+      <aside class="col-3 card bg-light mb-3" id="left-side">
+        <div class="card-body">
+          <h6>Search for a City:</h6>
+          <input id="search-input" />
+          <button class="btn btn-primary" id="search-button">Search</button>
+          <div class="container" id="city-list"></div>
+        </div>
       </aside>
 
       <!-- container for right side of page (main tag)
@@ -171,7 +173,6 @@
             url: secondQueryURL,
             method: "GET",
           }).then(function (response) {
-            
             forecast.empty();
 
             // var newTitle = $("<h4>");
@@ -231,14 +232,20 @@
           for (var i = 0; i < count; i++) {
             var currentCity = localStorage.getItem(i);
 
-            if (currentCity !== null) {
+            // if (currentCity !== null) {
+              var newParEl = $("<div>");
               var newEl = $("<div>");
               newEl.text(currentCity);
+              newEl.addClass("card-body");
               newEl.attr("data-list", i);
-              storedCities.prepend(newEl);
-            }
+              newParEl.addClass("card border-dark");
+              newParEl.append(newEl);
+              storedCities.prepend(newParEl);
+            // }
           }
         }
+
+        renderStorage();
 
         // Or could of used $(this)?
         $("#search-button").on("click", function () {
