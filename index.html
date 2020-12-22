@@ -59,16 +59,23 @@
         console.log("Im ready!!");
 
         var citySelected = $("#day-weather");
-        // var forecastTitle = $("#forecast-title");
         var forecast = $("#five-day-forecast");
         var storedCities = $("#city-list");
-        var city = "";
         var apiKey = "0ba2cfb5eb3e8515ca5fd458c3bdd160";
         var lat = "";
         var lon = "";
-        var count = 0;
 
-        function renderNow() {
+        function renderNow(city) {
+          console.log("city " + city);
+          if (city === "") {
+            var cities = JSON.parse(localStorage.getItem("cities"));
+            console.log(cities);
+            if (cities === null) {
+              return;
+            } else {
+              city = cities[cities.length - 1];
+            }
+          }
           var queryURL =
             "https://api.openweathermap.org/data/2.5/weather?q=" +
             city +
@@ -155,6 +162,7 @@
             citySelected.append($("<br><br>"));
 
             renderForecast();
+            renderStorage();
           });
         }
 
@@ -229,10 +237,13 @@
         // Listing the entered cities in a list
         function renderStorage() {
           storedCities.empty();
-          for (var i = 0; i < count; i++) {
-            var currentCity = localStorage.getItem(i);
+          var cities = localStorage.getItem("cities");
 
-            // if (currentCity !== null) {
+          if (cities !== null) {
+            cities = JSON.parse(cities);
+            for (var i = 0; i < cities.length; i++) {
+              var currentCity = cities[i];
+
               var newParEl = $("<div>");
               var newEl = $("<div>");
               newEl.text(currentCity);
@@ -241,30 +252,38 @@
               newParEl.addClass("card border-dark");
               newParEl.append(newEl);
               storedCities.prepend(newParEl);
-            // }
+            }
           }
         }
 
-        renderStorage();
+        renderNow("");
 
         // Or could of used $(this)?
         $("#search-button").on("click", function () {
           var inputSearch = $("#search-input").val();
           city = inputSearch;
           console.log("you clicked the button!: " + city);
+          var cities = localStorage.getItem("cities");
+          if (cities === null) {
+            cities = [];
+          } else {
+            console.log(typeof cities);
+            cities = JSON.parse(cities);
+            console.log(typeof cities);
+          }
 
-          localStorage.setItem(count, city);
-          count++;
-          console.log("you clicked the button!: " + count);
-          // array???
+          cities.push(city);
+          cities = JSON.stringify(cities);
+          localStorage.setItem("cities", cities);
+
           renderStorage();
-          renderNow();
+          renderNow(city);
         });
 
-        // $(this).on("click", "data-list", function(){
+        // $(this).on("click", "cities", function(){
         //   city = this.data;
         //   console.log("You click here!!")
-        //   renderNow();
+        //   cities = renderNow();
         // });
       });
     </script>
