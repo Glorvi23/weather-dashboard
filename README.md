@@ -17,7 +17,8 @@ You need to first install vscode, create a github account, and download git bash
 
 ## Usage
 
-![Weather-Dashboard](assets/images/.png)
+![Weather-Dashboard](assets/images/start_up_page.png)
+![Weather-Dashboard](assets/images/entered_city.png)
 
 
 ## Credits
