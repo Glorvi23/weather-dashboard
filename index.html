@@ -248,7 +248,7 @@
               var newEl = $("<div>");
               newEl.text(currentCity);
               newEl.addClass("card-body");
-              newEl.attr("data-list", i);
+              newEl.attr("id", "pick-me");
               newParEl.addClass("card border-dark");
               newParEl.append(newEl);
               storedCities.prepend(newParEl);
@@ -280,11 +280,11 @@
           renderNow(city);
         });
 
-        // $(this).on("click", "cities", function(){
-        //   city = this.data;
-        //   console.log("You click here!!")
-        //   cities = renderNow();
-        // });
+        $(this).on("click", "#pick-me", function(){
+          var city = this.innerHTML;
+          console.log("You click here!!" + city);
+          cities = renderNow(city);
+        });
       });
     </script>
   </body>
